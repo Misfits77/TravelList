@@ -1,6 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getDocs, collection, query, where, addDoc } from "firestorage";
+import {
+  getDocs,
+  getDoc,
+  doc,
+  collection,
+  query,
+  where,
+  addDoc,
+  setDoc,
+} from "firestorage";
+import _ from "underscore";
 
 function ItemSelect({ handleItemClicked, selectedItems }) {
   const [categories, setCategories] = useState([]);
@@ -36,6 +46,18 @@ function Category({ category, handleItemClicked, selectedItems }) {
     const items = itemsSnapshot.data();
     setItems(items);
   }, []);
+
+  useEffect(() => {
+    const diff = _.difference(
+      items.map((i) => i.id),
+      selectedItems
+    );
+    if (diff.length !== items.length) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [selectedItems, items]);
 
   return (
     <div className="categories">
@@ -75,12 +97,21 @@ function Category({ category, handleItemClicked, selectedItems }) {
   );
 }
 
-function CreateTravelList() {
+function EditTravelList() {
   const [listName, setListName] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    const travelList = getDoc(doc("travelLists", params.id)).data();
+    setListName(travelList.name);
+    setDestination(travelList.destination);
+    setDate(travelList.date);
+    setSelectedItems(travelList.items);
+  }, []);
 
   const handleItemClicked = (item) => {
     if (!selectedItems.includes(item.id)) {
@@ -94,14 +125,14 @@ function CreateTravelList() {
   };
 
   const submitTravelList = () => {
-    const travelListRef = addDoc(collection("travelLists"), {
+    setDoc(doc("travelLists", params.id), {
       name: listName,
       destination,
       date,
       items: selectedItems,
       selectedItems: [],
     });
-    navigate(`/travel-list/${travelListRef.id}`);
+    navigate(`/travel-list/${params.id}`);
   };
 
   return (
@@ -156,7 +187,7 @@ function CreateTravelList() {
             </h5>
           </div>
           <nav className="basic-info">
-            <button>Create</button>
+            <button>Save</button>
           </nav>
         </form>
       </main>
@@ -169,4 +200,4 @@ function CreateTravelList() {
   );
 }
 
-export default CreateTravelList;
+export default EditTravelList;
