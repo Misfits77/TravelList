@@ -51,7 +51,6 @@ function SeeTravelList() {
   const [travelList, setTravelList] = useState(null);
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const params = useParams();
-  console.log(checkedCheckboxes);
 
   useEffect(() => {
     const travelListSnapShot = getDoc(doc("travelLists", params.id));

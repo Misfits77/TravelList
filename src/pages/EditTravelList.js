@@ -11,6 +11,7 @@ import {
   setDoc,
 } from "firestorage";
 import _ from "underscore";
+import { RiChatCheckFill, RiHome2Fill } from "react-icons/ri";
 
 function ItemSelect({ handleItemClicked, selectedItems }) {
   const [categories, setCategories] = useState([]);
@@ -187,13 +188,17 @@ function EditTravelList() {
             </h5>
           </div>
           <nav className="basic-info">
-            <button>Save</button>
+            <button>
+              <RiChatCheckFill />
+            </button>
           </nav>
         </form>
       </main>
       <nav>
         <Link to="/">
-          <button className="home-button">Home</button>
+          <button className="home-button">
+            <RiHome2Fill />
+          </button>
         </Link>
       </nav>
     </>
