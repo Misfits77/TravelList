@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { cloneElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getDocs,
   collection,
@@ -10,7 +10,12 @@ import {
   deleteDoc,
   updateDoc,
 } from "firestorage";
-import { RiChatCheckFill, RiChatDeleteLine, RiHome2Fill } from "react-icons/ri";
+import {
+  RiCheckboxFill,
+  RiDeleteBin2Fill,
+  RiHome2Fill,
+  RiAddBoxLine,
+} from "react-icons/ri";
 import _, { forEach } from "underscore";
 
 function ItemSelect({
@@ -86,6 +91,7 @@ function Category({
   return (
     <div className="categories">
       <h3
+        className="categoryName"
         onClick={(e) => {
           if (isOpen) {
             setIsOpen(false);
@@ -97,12 +103,13 @@ function Category({
         {category.name}
         {category.custom && (
           <span
+            className="removeButtoninCreate"
             onClick={(e) => {
               removeCategory(category);
             }}
           >
             {" "}
-            <RiChatDeleteLine />
+            <RiDeleteBin2Fill />
           </span>
         )}
       </h3>
@@ -124,32 +131,37 @@ function Category({
                 )}
                 {item.custom && (
                   <span
+                    className="removeButtoninCreate"
                     onClick={(e) => {
                       removeItem(item);
                     }}
                   >
                     {" "}
-                    <RiChatDeleteLine />
+                    <RiDeleteBin2Fill />
                   </span>
                 )}
               </p>
             );
           })}
-          <label>
-            Custom Item
-            <input
-              value={customItemName}
-              onChange={(e) => setCustomItemName(e.target.value)}
-            />
-          </label>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              createCustomItem();
-            }}
-          >
-            Add
-          </button>
+          <div className="customItemContainer">
+            <label>
+              Custom Item
+              <input
+                className="inputCustom"
+                value={customItemName}
+                onChange={(e) => setCustomItemName(e.target.value)}
+              />
+            </label>
+            <button
+              className="addButtoninCreate"
+              onClick={(e) => {
+                e.preventDefault();
+                createCustomItem();
+              }}
+            >
+              <RiAddBoxLine />
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -239,6 +251,13 @@ function CreateTravelList() {
 
   return (
     <>
+      <nav className="navbarinCreate">
+        <Link to="/">
+          <button className="home-button">
+            <RiHome2Fill />
+          </button>
+        </Link>
+      </nav>
       <main>
         <form
           className="basic-info"
@@ -250,6 +269,7 @@ function CreateTravelList() {
           <label>
             List Name
             <input
+              className="inputCreate"
               required
               value={listName}
               onChange={(e) => {
@@ -260,6 +280,7 @@ function CreateTravelList() {
           <label>
             Destination
             <input
+              className="inputCreate"
               required
               value={destination}
               onChange={(e) => {
@@ -270,6 +291,7 @@ function CreateTravelList() {
           <label>
             Date
             <input
+              className="inputCreate"
               required
               type="date"
               value={date}
@@ -286,41 +308,37 @@ function CreateTravelList() {
               selectedItems={selectedItems}
               removeCategory={removeCategory}
             />
-            <h5>
-              You can create some custom categories to add your own items too!
-            </h5>
-            <label>
-              <h5>Custom Category</h5>
-              <input
-                value={customCategoryName}
-                onChange={(e) => {
-                  setCustomCategoryName(e.target.value);
-                }}
-              />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  createCustomCategory();
-                }}
-              >
-                Add
-              </button>
+            <label className="createFormContainer">
+              <h5>
+                You can create some custom categories to add your own items too!
+              </h5>
+              <div className="customCategoryinCreate">
+                <input
+                  className="inputCustom"
+                  value={customCategoryName}
+                  onChange={(e) => {
+                    setCustomCategoryName(e.target.value);
+                  }}
+                />
+                <button
+                  className="addButtoninCreate"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    createCustomCategory();
+                  }}
+                >
+                  <RiAddBoxLine />
+                </button>
+              </div>
             </label>
           </div>
-          <nav className="basic-info">
-            <button>
-              <RiChatCheckFill />
+          <nav className="navBottominCreate">
+            <button className="submitCreate">
+              Done <RiCheckboxFill />
             </button>
           </nav>
         </form>
       </main>
-      <nav>
-        <Link to="/">
-          <button className="home-button">
-            <RiHome2Fill />
-          </button>
-        </Link>
-      </nav>
     </>
   );
 }

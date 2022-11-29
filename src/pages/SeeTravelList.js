@@ -10,6 +10,7 @@ import {
   where,
 } from "firestorage";
 import _ from "underscore";
+import { RiCheckboxFill, RiHome2Fill } from "react-icons/ri";
 
 function TravelListItems({ itemIds, handleChecked, checkedCheckboxes }) {
   const q = query(collection("items"), where("id", "in", itemIds));
@@ -81,8 +82,15 @@ function SeeTravelList() {
 
   return (
     <>
-      <main>
-        <div>
+      <nav className="navbarinCreate">
+        <Link to="/">
+          <button className="home-button">
+            <RiHome2Fill />
+          </button>
+        </Link>
+      </nav>
+      <main className="seeContainer">
+        <div className="seeBasicInfo">
           <p>Name: {travelList.name}</p>
           <p>Destination: {travelList.destination}</p>
           <p>Date: {travelList.date}</p>
@@ -93,11 +101,10 @@ function SeeTravelList() {
           checkedCheckboxes={checkedCheckboxes}
         />
       </main>
-      <nav>
-        <button onClick={save}>Save</button>
-        <Link to="/">
-          <button className="home-button">Home</button>
-        </Link>
+      <nav className="navBottominCreate">
+        <button className="submitCreate" onClick={save}>
+          Save <RiCheckboxFill />
+        </button>
       </nav>
     </>
   );

@@ -1,6 +1,9 @@
-import { collection, addDoc } from "firestorage";
+import { collection, addDoc, getDocs } from "firestorage";
 
 const seed = () => {
+  const categories = getDocs(collection("categories")).data();
+  if (categories.length > 0) return;
+
   const appliances = addDoc(collection("categories"), {
     name: "Appliances",
   });

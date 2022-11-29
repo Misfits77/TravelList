@@ -11,7 +11,7 @@ import {
   setDoc,
 } from "firestorage";
 import _ from "underscore";
-import { RiChatCheckFill, RiHome2Fill } from "react-icons/ri";
+import { RiCheckboxFill, RiHome2Fill } from "react-icons/ri";
 
 function ItemSelect({ handleItemClicked, selectedItems }) {
   const [categories, setCategories] = useState([]);
@@ -63,6 +63,7 @@ function Category({ category, handleItemClicked, selectedItems }) {
   return (
     <div className="categories">
       <h3
+        className="categoryName"
         onClick={(e) => {
           if (isOpen) {
             setIsOpen(false);
@@ -138,6 +139,13 @@ function EditTravelList() {
 
   return (
     <>
+      <nav className="navbarinCreate">
+        <Link to="/">
+          <button className="home-button">
+            <RiHome2Fill />
+          </button>
+        </Link>
+      </nav>
       <main>
         <form
           className="basic-info"
@@ -149,6 +157,7 @@ function EditTravelList() {
           <label>
             List Name
             <input
+              className="inputCreate"
               required
               value={listName}
               onChange={(e) => {
@@ -159,6 +168,7 @@ function EditTravelList() {
           <label>
             Destination
             <input
+              className="inputCreate"
               required
               value={destination}
               onChange={(e) => {
@@ -169,6 +179,7 @@ function EditTravelList() {
           <label>
             Date
             <input
+              className="inputCreate"
               required
               type="date"
               value={date}
@@ -183,24 +194,14 @@ function EditTravelList() {
               handleItemClicked={handleItemClicked}
               selectedItems={selectedItems}
             />
-            <h5>
-              You can create some custom categories to add your own items too!
-            </h5>
           </div>
-          <nav className="basic-info">
-            <button>
-              <RiChatCheckFill />
+          <nav className="navBottominCreate">
+            <button className="submitCreate">
+              Save <RiCheckboxFill />
             </button>
           </nav>
         </form>
       </main>
-      <nav>
-        <Link to="/">
-          <button className="home-button">
-            <RiHome2Fill />
-          </button>
-        </Link>
-      </nav>
     </>
   );
 }

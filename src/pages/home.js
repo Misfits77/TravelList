@@ -12,9 +12,10 @@ import {
 } from "firestorage";
 import { useEffect, useState } from "react";
 import {
-  RiChatSettingsFill,
-  RiChatDeleteFill,
+  RiEditBoxFill,
+  RiDeleteBin2Fill,
   RiChatNewFill,
+  RiFileCopy2Fill,
 } from "react-icons/ri";
 
 function Home() {
@@ -55,6 +56,14 @@ function Home() {
 
   return (
     <>
+      <nav className="navbar">
+        <h1>Travel List</h1>
+        <Link to="/travel-list/new">
+          <button className="homeNew">
+            New <RiChatNewFill />
+          </button>
+        </Link>
+      </nav>
       <main>
         {travelLists.map((travelList) => {
           return (
@@ -68,11 +77,11 @@ function Home() {
                     cloneList(travelList);
                   }}
                 >
-                  Clone
+                  <RiFileCopy2Fill />
                 </button>
                 <Link to={`/travel-list/${travelList.id}/edit`}>
                   <button>
-                    <RiChatSettingsFill />
+                    <RiEditBoxFill />
                   </button>
                 </Link>
                 <button
@@ -80,20 +89,13 @@ function Home() {
                     deleteTravelList(travelList);
                   }}
                 >
-                  <RiChatDeleteFill />
+                  <RiDeleteBin2Fill />
                 </button>
               </div>
             </div>
           );
         })}
       </main>
-      <nav>
-        <Link to="/travel-list/new">
-          <button>
-            New <RiChatNewFill />
-          </button>
-        </Link>
-      </nav>
     </>
   );
 }

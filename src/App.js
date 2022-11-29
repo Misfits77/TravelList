@@ -8,7 +8,6 @@ import EditTravelList from "./pages/EditTravelList";
 function App() {
   return (
     <div className="App">
-      <h1>Travel List</h1>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/travel-list/new" element={<CreateTravelList />} />
